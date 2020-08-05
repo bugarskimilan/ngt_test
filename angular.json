@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ngt-test"
+    }
+  },
+  "defaultProject": "ngt-test",
+  "cli": {
+    "analytics": "a0604e39-d71e-4b18-a79f-f15f00bb1819"
+  }
 }
