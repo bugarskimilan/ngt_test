@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "ngt-test-76697"
+  },
+  "targets": {
+    "ngt-test-76697": {
+      "hosting": {
+        "ngt-test": [
+          "ngt-test-76697"
+        ]
+      }
+    }
   }
 }
