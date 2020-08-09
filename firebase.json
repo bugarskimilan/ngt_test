@@ -4,12 +4,9 @@
   },
   "hosting": [
     {
+      "target": "ngt-test",
       "public": "dist/ngt-test",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
           "source": "**",
@@ -20,9 +17,7 @@
     {
       "target": "ngt-test",
       "public": "dist/ngt-test",
-      "ignore": [
-        "**/.*"
-      ],
+      "ignore": ["**/.*"],
       "headers": [
         {
           "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
