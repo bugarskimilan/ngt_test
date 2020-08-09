@@ -1,1 +1,34 @@
-<p>sub-fund-details works!</p>
+<mat-card style="margin: 2em;">
+  <mat-toolbar>
+    <button mat-icon-button (click)="goback()">
+      <mat-icon>backspace</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <table
+    mat-table
+    [dataSource]="shareclasses | async"
+    class="mat-elevation-z8"
+    style="width: -webkit-fill-available;"
+  >
+    <ng-container matColumnDef="share_class_name">
+      <th mat-header-cell *matHeaderCellDef>Shareclass Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.share_class_name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nb_alerts">
+      <th mat-header-cell *matHeaderCellDef>Number of Alerts</th>
+      <td mat-cell *matCellDef="let element">{{ element.nb_alerts }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="report_status">
+      <th mat-header-cell *matHeaderCellDef>Report Status</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.report_status ? "READY" : "NOT READY" }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</mat-card>

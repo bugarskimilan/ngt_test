@@ -1,2 +1,14 @@
-<!-- enclose everything in some sort of card -->
+<mat-toolbar style="height: fit-content;">
+  <mat-form-field appearance="outline">
+    <mat-label>Position date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      (ngModelChange)="onDateChanged($event)"
+      [ngModel]="positionDate | async"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</mat-toolbar>
 <router-outlet></router-outlet>

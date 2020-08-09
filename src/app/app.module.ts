@@ -14,6 +14,10 @@ import { FundDetailsComponent } from './containers/fund-details/fund-details.com
 import { SubFundDetailsComponent } from './containers/sub-fund-details/sub-fund-details.component';
 import { NgxsModule, NgxsModuleOptions } from '@ngxs/store';
 import { FundsState } from './store';
+import { DemoMaterialModule } from './material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SummaryListItemComponent } from './components/summary-list-item/summary-list-item.component';
+import { MaterialElevationDirective } from './components/mat-elevation-directive/mat-elevation-directive';
 
 export const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -28,6 +32,8 @@ export const ngxsConfig: NgxsModuleOptions = {
     FundsHomeComponent,
     FundDetailsComponent,
     SubFundDetailsComponent,
+    SummaryListItemComponent,
+    MaterialElevationDirective,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +42,9 @@ export const ngxsConfig: NgxsModuleOptions = {
     AngularFireDatabaseModule,
     BrowserAnimationsModule,
     NgxsModule.forRoot([FundsState], ngxsConfig),
+    DemoMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

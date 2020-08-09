@@ -1,1 +1,13 @@
-<p>fund-details works!</p>
+<mat-card style="margin: 2em;">
+  <mat-toolbar>
+    <button mat-icon-button (click)="goback()">
+      <mat-icon>backspace</mat-icon>
+    </button>
+  </mat-toolbar>
+  <app-summary-list-item
+    [item]="item"
+    (onSelected)="goToDetails($event)"
+    *ngFor="let item of subfundlist | async"
+  >
+  </app-summary-list-item>
+</mat-card>

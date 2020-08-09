@@ -1,1 +1,8 @@
-<p>funds-home works!</p>
+<mat-card style="margin: 2em;">
+  <app-summary-list-item
+    [item]="item"
+    (onSelected)="goToDetails($event)"
+    *ngFor="let item of fundlist | async"
+  >
+  </app-summary-list-item>
+</mat-card>

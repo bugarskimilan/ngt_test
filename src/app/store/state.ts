@@ -92,19 +92,30 @@ export class FundsState {
       return st;
     });
 
+    console.log(`analysisDates/${moment(action.date).format('YYYYMMDD')}`);
     return this.db
       .object(`analysisDates/${moment(action.date).format('YYYYMMDD')}`)
       .snapshotChanges()
       .pipe(
         take(1),
         tap((data) => {
-          setState((state: FundsStateModel) => {
-            state.loaded = true;
-            state.loading = false;
-            state.positionDate = moment(data.key, 'YYYYMMDD').toDate();
-            state.funds = data.payload.val() as { [fundid: string]: Fund };
-            return state;
-          });
+          console.log(data);
+          if (data.key)
+            setState((state: FundsStateModel) => {
+              state.loaded = true;
+              state.loading = false;
+              state.positionDate = moment(data.key, 'YYYYMMDD').toDate();
+              state.funds = data.payload.val() as { [fundid: string]: Fund };
+              return state;
+            });
+          else
+            setState((state: FundsStateModel) => {
+              state.loaded = false;
+              state.loading = false;
+              state.positionDate = null;
+              state.funds = null;
+              return state;
+            });
         })
       );
   }
@@ -119,33 +130,48 @@ export class FundsState {
   }
 
   @Selector()
+  public static loaded(state: FundsStateModel) {
+    return state.loaded;
+  }
+  @Selector()
+  public static loading(state: FundsStateModel) {
+    return state.loading;
+  }
+
+  @Selector()
   @ImmutableSelector()
   public static fundList(state: FundsStateModel): ListItemModel[] {
-    return Object.entries(state.funds).map((f) => ({
-      id: f[0],
-      name: f[1].fund_name,
-      alerts: this.sumAllFundAlerts(f[1].subfunds),
-      finished: this.getpercentFinished(f[1].subfunds),
-    }));
+    return !!state.funds
+      ? Object.entries(state.funds).map((f) => ({
+          id: f[0],
+          name: f[1].fund_name,
+          alerts: this.sumAllFundAlerts(f[1].subfunds),
+          finished: this.getpercentFinished(f[1].subfunds),
+        }))
+      : [];
   }
 
   public static subfundList(fund_id: string) {
     return createSelector(
       [FundsState],
       (state: FundsStateModel): ListItemModel[] => {
-        return Object.entries(state.funds[fund_id].subfunds).map((s) => ({
-          id: s[0],
-          name: s[1].subfund_name,
-          alerts: this.sumAllSubFundAlerts(s[1].shareclasses),
-          finished: this.getpercentSubFundFinished(s[1].shareclasses),
-        }));
+        return !!state.funds
+          ? Object.entries(state.funds[fund_id].subfunds).map((s) => ({
+              id: s[0],
+              name: s[1].subfund_name,
+              alerts: this.sumAllSubFundAlerts(s[1].shareclasses),
+              finished: this.getpercentSubFundFinished(s[1].shareclasses),
+            }))
+          : [];
       }
     );
   }
 
   public static shareclasses(fundid: string, subfundid: string) {
     return createSelector([FundsState], (state: FundsStateModel) => {
-      return state.funds[fundid].subfunds[subfundid].shareclasses;
+      return !!state.funds
+        ? Object.values(state.funds[fundid].subfunds[subfundid].shareclasses)
+        : [];
     });
   }
 
